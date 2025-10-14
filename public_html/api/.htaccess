@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteRule ^login/? index.php?cmd=login [NC,L]
+RewriteRule ^user/dash/? index.php?type=user&cmd=dash [NC,L]
+RewriteRule ^user/apps/? index.php?type=user&cmd=apps [NC,L]
+RewriteRule ^user/notes/? index.php?type=user&cmd=notes [NC,L]
+RewriteRule ^user/add/? index.php?type=user&cmd=add [NC,L]
+RewriteRule ^user/save/? index.php?type=user&cmd=save [NC,L]
