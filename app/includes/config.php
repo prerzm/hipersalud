@@ -1,7 +1,7 @@
 <?php
 
 # Server-based settings
-if(isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME']=="localrafa") {
+if(isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME']=="localhipersalud") {
     date_default_timezone_set('America/Mexico_City');
     error_reporting(E_ALL);
     ini_set('display_errors', '1');
@@ -13,8 +13,8 @@ if(isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME']=="localrafa") {
 
 # Database login details
 define("DB_HOST", "localhost");
-define("DB_NAME", "rafadm_db");
-define("DB_USER", "rafadm_user");
+define("DB_NAME", "hipersalud_data");
+define("DB_USER", "hipersalud_user");
 define("DB_PASS", "3Bhu1bmFQmhM2");
 
 # path settings
