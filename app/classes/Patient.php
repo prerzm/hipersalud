@@ -111,7 +111,7 @@ class Patient extends Record {
 
     public function get_data_params() {
         $data = array();
-        $params = sql_select("SELECT paramDateTime, fields FROM admin_users_params WHERE userId = ".$this->id." LIMIT 0, 20");
+        $params = sql_select("SELECT paramDateTime, fields FROM admin_users_params WHERE userId = ".$this->id." ORDER BY paramDateTime DESC LIMIT 0, 20");
         if($params) {
             foreach($params as $p) {
                 $dec = fromdb($p['fields'], true);
@@ -193,7 +193,7 @@ class Patient extends Record {
         $response['attendance'] = $attended;
 
         # params
-        $results = sql_select("SELECT * FROM admin_users_params WHERE userId = ".$this->id." ORDER BY paramDateTime ASC LIMIT 0, 20");
+        $results = sql_select("SELECT * FROM admin_users_params WHERE userId = ".$this->id." ORDER BY paramDateTime DESC LIMIT 0, 20");
         if($results) {
             for($i=0; $i<count($results); $i++) {
                 $results[$i]['fields'] = fromdb($results[$i]['fields'], true);
