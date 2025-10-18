@@ -204,7 +204,7 @@ class Patient extends Record {
             $glu = array();
             for($i=0; $i<count($results); $i++) {
                 $fields = fromdb($results[$i]['fields'], true);
-                $date = $results[$i]['paramDateTime'];
+                $date = DateLang::short($results[$i]['paramDateTime']);
                 $weight[] = (isset($fields['weight'])) ? array("date" => $date, "value" => $fields['weight']) : array("date" => $date, "value" => 0);
                 $bmi[] = (isset($fields['weight'])) ? array( "date" => $date, "value" => (float)NumberFormat::float(Health::bmi($fields['weight'], $this->get("height"))) ) : array("date" => $date, "value" => 0);
                 $hr[] = (isset($fields['fc'])) ? array("date" => $date, "value" => $fields['fc']) : array("date" => $date, "value" => 0);
