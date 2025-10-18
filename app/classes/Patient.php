@@ -50,6 +50,7 @@ class Patient extends Record {
                     "bmi" => NumberFormat::float(Health::bmi($p['weight'], $this->get("height"))), 
                     "fc" => $p['fc'], 
                     "bp" => $p['presis']."/".$p['predia'], 
+                    "glu" => (isset($p['glu'])) ? $p['glu'] : 0, 
                     "diagnosis" => $f['diagnosis'], 
                     "notes" => $f['notes']
                 );
@@ -171,7 +172,7 @@ class Patient extends Record {
 
     public function get_app_graph_points() {
         # response
-        $response = array( "attendance" => 0, "weight" => [], "bmi" => [], "hr" => [], "systolic" => [], "diastolic" => []);
+        $response = array( "attendance" => 0, "weight" => [], "bmi" => [], "hr" => [], "systolic" => [], "diastolic" => [], "glucose" => []);
 
         # attendance
         $appointments = sql_select("SELECT a.appointmentId, a.appStatusId FROM admin_appointments a 
@@ -193,56 +194,32 @@ class Patient extends Record {
         $response['attendance'] = $attended;
 
         # params
-        $results = sql_select("SELECT * FROM admin_users_params WHERE userId = ".$this->id." ORDER BY paramDateTime DESC LIMIT 0, 20");
+        $results = sql_select("SELECT * FROM admin_users_params WHERE userId = ".$this->id." ORDER BY paramDateTime DESC LIMIT 0, 5");
         if($results) {
+            $weight = array();
+            $bmi = array();
+            $hr = array();
+            $presis = array();
+            $predia = array();
+            $glu = array();
             for($i=0; $i<count($results); $i++) {
-                $results[$i]['fields'] = fromdb($results[$i]['fields'], true);
+                $fields = fromdb($results[$i]['fields'], true);
+                $date = $results[$i]['paramDateTime'];
+                $weight[] = (isset($fields['weight'])) ? array("date" => $date, "value" => $fields['weight']) : array("date" => $date, "value" => 0);
+                $bmi[] = (isset($fields['weight'])) ? array( "date" => $date, "value" => (float)NumberFormat::float(Health::bmi($fields['weight'], $this->get("height"))) ) : array("date" => $date, "value" => 0);
+                $hr[] = (isset($fields['fc'])) ? array("date" => $date, "value" => $fields['fc']) : array("date" => $date, "value" => 0);
+                $presis[] = (isset($fields['presis'])) ? array("date" => $date, "value" => $fields['presis']) : array("date" => $date, "value" => 0);
+                $predia[] = (isset($fields['predia'])) ? array("date" => $date, "value" => $fields['predia']) : array("date" => $date, "value" => 0);
+                $glu[] = (isset($fields['glu'])) ? array("date" => $date, "value" => $fields['glu']) : array("date" => $date, "value" => 0);
             }
 
-            # weight
-            $points = array();
-            foreach($results as $r) {
-                if(isset($r['fields']['weight'])) {
-                    $points[] = array( "date" => DateLang::date($r['paramDateTime'], "d/m"), "value" => (float)$r['fields']['weight'] );
-                }
-            }
-            $response['weight'] = $points;
-
-            # bmi
-            $points = array();
-            foreach($results as $r) {
-                if(isset($r['fields']['weight'])) {
-                    $points[] = array( "date" => DateLang::date($r['paramDateTime'], "d/m"), "value" => (float)NumberFormat::float(Health::bmi($r['fields']['weight'], $this->get("height"))) );
-                }
-            }
-            $response['bmi'] = $points;
-
-            # hr
-            $points = array();
-            foreach($results as $r) {
-                if(isset($r['fields']['fc'])) {
-                    $points[] = array( "date" => DateLang::date($r['paramDateTime'], "d/m"), "value" => (int)$r['fields']['fc'] );
-                }
-            }
-            $response['hr'] = $points;
-
-            # systolic
-            $points = array();
-            foreach($results as $r) {
-                if(isset($r['fields']['presis'])) {
-                    $points[] = array( "date" => DateLang::date($r['paramDateTime'], "d/m"), "value" => (int)$r['fields']['presis'] );
-                }
-            }
-            $response['systolic'] = $points;
-
-            # diastolic
-            $points = array();
-            foreach($results as $r) {
-                if(isset($r['fields']['predia'])) {
-                    $points[] = array( "date" => DateLang::date($r['paramDateTime'], "d/m"), "value" => (int)$r['fields']['predia'] );
-                }
-            }
-            $response['diastolic'] = $points;
+            # response
+            $response['weight'] = array_reverse($weight);
+            $response['bmi'] = array_reverse($bmi);
+            $response['hr'] = array_reverse($hr);
+            $response['systolic'] = array_reverse($presis);
+            $response['diastolic'] = array_reverse($predia);
+            $response['glucose'] = array_reverse($glu);
 
         }
 

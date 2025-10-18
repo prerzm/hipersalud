@@ -72,6 +72,7 @@ define("LABEL_PARAMS_WEIGHT", "Peso");
 define("LABEL_PARAMS_BMI", "IMC");
 define("LABEL_PARAMS_HEART_RATE", "Frecuencia Cardiaca");
 define("LABEL_PARAMS_BLOOD_PRESSURE", "Presión Arterial");
+define("LABEL_PARAMS_GLUCOSE", "Glucosa");
 define("LABEL_PARAMS_HEART_RATE_SHORT", "FC");
 define("LABEL_PARAMS_BLOOD_PRESSURE_SHORT", "PA");
 define("LABEL_PARAMS_SYSTOLIC", "Sistólica");

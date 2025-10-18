@@ -8,6 +8,7 @@
 				<th><?=LABEL_PARAMS_BMI;?></th>
 				<th><?=LABEL_PARAMS_HEART_RATE;?></th>
 				<th><?=LABEL_PARAMS_BLOOD_PRESSURE;?></th>
+				<th><?=LABEL_PARAMS_GLUCOSE;?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -18,6 +19,7 @@
 					<td><?=$h['bmi'];?></td>
 					<td><?=$h['fc'];?></td>
 					<td><?=$h['bp'];?></td>
+					<td><?=$h['glu'];?></td>
 				</tr>
 				<tr>
 					<td style="text-align:right;"><strong><?=LABEL_CONSULTATIONS_DIAGNOSIS;?></strong></td>

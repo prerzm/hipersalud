@@ -86,6 +86,14 @@
 												</div>
 											</div>
                                         </div>
+										<div class="control-group">
+											<label class="control-label" for="glu"><?=LABEL_PARAMS_GLUCOSE;?></label>
+											<div class="controls">
+												<div class="input-append">
+													<input type="text" class="input input-small" id="glu" name="params[glu]" autocomplete="off" value="<?=$params->get("glu");?>" <?=(!$edit) ? 'disabled': '';?>><span class="add-on">mg</span>
+												</div>
+											</div>
+										</div>
                                         <div class="control-group">
                                             <label class="control-label" for="diagnosis"><?=LABEL_CONSULTATIONS_DIAGNOSIS;?></label>
                                             <div class="controls">

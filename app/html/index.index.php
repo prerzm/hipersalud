@@ -21,6 +21,8 @@
 			<?php include("index.index.patient.php"); ?>
 		</div> <!-- /.row -->
 	<?php } ?>
+
+	<?php var_dump($points, $data, $app); ?>
 	
 </div> <!-- /.container -->
 

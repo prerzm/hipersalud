@@ -72,6 +72,7 @@ define("LABEL_PARAMS_WEIGHT", "Weight");
 define("LABEL_PARAMS_BMI", "BMI");
 define("LABEL_PARAMS_HEART_RATE", "Heart Rate");
 define("LABEL_PARAMS_BLOOD_PRESSURE", "Blood Pressure");
+define("LABEL_PARAMS_GLUCOSE", "Glucose");
 define("LABEL_PARAMS_HEART_RATE_SHORT", "HR");
 define("LABEL_PARAMS_BLOOD_PRESSURE_SHORT", "BP");
 define("LABEL_PARAMS_SYSTOLIC", "Systolic");
