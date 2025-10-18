@@ -32,8 +32,11 @@ switch($cmd) {
         $history = $record->get_history();
 		$data = $record->get_graph_data();
 		$app_data = $record->get_app_data();
+		$app = $record->get_app_graph_points();
 
-		var_dump($data);
+		print "<pre>";
+		var_dump($app);
+		print "</pre>";
 
 		# view
 		include(getview("patients.edit"));

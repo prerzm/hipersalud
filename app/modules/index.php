@@ -15,6 +15,13 @@ switch($cmd) {
 			$app_data = $record->get_app_data();
 		}
 
+		$pat = new Patient(9);
+		$points = $pat->get_app_graph_points();
+		$data = $pat->get_graph_data();
+		$app = $pat->get_app_data();
+
+		
+
 		# view
 		include(getview());
 
