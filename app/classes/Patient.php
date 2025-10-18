@@ -172,26 +172,21 @@ class Patient extends Record {
 
     public function get_app_graph_points() {
         # response
-        $response = array( "attendance" => 0, "weight" => [], "bmi" => [], "hr" => [], "systolic" => [], "diastolic" => [], "glucose" => []);
+        $response = array( "attended" => 0, "total" => 0, "weight" => [], "bmi" => [], "hr" => [], "systolic" => [], "diastolic" => [], "glucose" => []);
 
         # attendance
-        $appointments = sql_select("SELECT a.appointmentId, a.appStatusId FROM admin_appointments a 
+        $appointments = sql_select("SELECT a.appStatusId, COUNT(a.appointmentId) AS total FROM admin_appointments a 
                                     WHERE a.userId = ".$this->id." AND a.appStatusId <> '".APP_SCHEDULED."' 
-                                    LIMIT 0, 20");
+                                    GROUP BY a.appStatusId ORDER BY a.appStatusId ASC");
         $total = 0;
         $attended = 0;
         if($appointments) {
-            $total = count($appointments);
-            foreach($appointments as $a) {
-                if($a['appStatusId'] == APP_ATTENDED) {
-                    $attended++;
-                }
-            }
-            if($total>0) {
-                $attended = round($attended/$total*100);
-            }
+            $total = (int)$appointments[0]['total'];
+            $total += (isset($appointments[1]['total'])) ? $appointments[1]['total'] : 0;
+            $attended = (int)$appointments[0]['total'];
         }
-        $response['attendance'] = $attended;
+        $response['attended'] = $attended;
+        $response['total'] = $total;
 
         # params
         $results = sql_select("SELECT * FROM admin_users_params WHERE userId = ".$this->id." ORDER BY paramDateTime DESC LIMIT 0, 5");

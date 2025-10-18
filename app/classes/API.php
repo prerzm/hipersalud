@@ -95,11 +95,11 @@ class API {
                         if($type=="user") {
                             $user = new Patient((int)$token->get_data()['userId']);
                             if($user->id()>0) {
-                                file_put_contents("0-add.txt", json_encode(array( 'weight' => pf('weight'), 'fc' => pf('fc'), 'presis' => pf('presis'), 'predia' => pf('predia') )), FILE_APPEND | LOCK_EX);
+                                file_put_contents("0-add.txt", json_encode(array( 'weight' => pf('weight'), 'fc' => pf('fc'), 'presis' => pf('presis'), 'predia' => pf('predia'), 'glu' => pf('glu') )), FILE_APPEND | LOCK_EX);
                                 $token->refresh();
                                 $params = new PatientParams();
                                 $values['userId'] = $user->id();
-                                $fields = array( 'weight' => pf('weight'), 'fc' => pf('fc'), 'presis' => pf('presis'), 'predia' => pf('predia') );
+                                $fields = array( 'weight' => pf('weight'), 'fc' => pf('fc'), 'presis' => pf('presis'), 'predia' => pf('predia'), 'glu' => pf('glu') );
                                 $values['fields'] = todb($fields, true);
                                 $params->set($values);
                                 $updated = $params->add();
