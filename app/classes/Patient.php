@@ -189,7 +189,7 @@ class Patient extends Record {
         $response['total'] = $total;
 
         # params
-        $results = sql_select("SELECT * FROM admin_users_params WHERE userId = ".$this->id." ORDER BY paramDateTime DESC LIMIT 0, 5", true);
+        $results = sql_select("SELECT * FROM admin_users_params WHERE userId = ".$this->id." ORDER BY paramDateTime DESC LIMIT 0, 5");
         if($results) {
             for($i=0; $i<count($results); $i++) {
                 $results[$i]['fields'] = fromdb($results[$i]['fields'], true);
