@@ -194,6 +194,7 @@ class Patient extends Record {
             for($i=0; $i<count($results); $i++) {
                 $results[$i]['fields'] = fromdb($results[$i]['fields'], true);
             }
+            $results = array_reverse($results);
 
             # weight
             $points = array();
