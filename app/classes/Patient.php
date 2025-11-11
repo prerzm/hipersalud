@@ -259,17 +259,19 @@ class Patient extends Record {
 
     public function get_app_appointments() {
 
-        $response = array( "next" => [], "previous" => [] );
+        $response = array( "nextWeekday" => 0, "nextDay" => 0, "nextMonth" => "", "nextYear" => 0, "nextTime" => "", "nextDoctor" => "", "nextEmail" => "", "previous" => [] );
 
         # next appointment
         $next = sql_select_row("SELECT a.appDateTime, u.name, u.email FROM admin_appointments a, admin_users u 
                                 WHERE a.doctorId = u.userId AND a.userId = ".$this->id." AND a.appDateTime >= NOW()");
         if($next) {
-            $response['next'] = array(  "date" => DateLang::short($next['appDateTime']), 
-                                        "time" => date("H:i A", strtotime($next['appDateTime'])), 
-                                        "doctor" => $next['name'], 
-                                        "email" => $next['email']
-                                );
+            $response['nextWeekday'] = (int)(date("N", strtotime($next['appDateTime']))-1);
+            $response['nextDay'] = (int)date("j", strtotime($next['appDateTime']));
+            $response['nextMonth'] = (int)(date("n", strtotime($next['appDateTime']))-1);
+            $response['nextYear'] = (int)date("Y", strtotime($next['appDateTime']));
+            $response['nextTime'] = date("H:i A", strtotime($next['appDateTime']));
+            $response['nextDoctor'] = $next['name'];
+            $response['nextEmail'] = $next['email'];
         }
 
         # previous appointments
