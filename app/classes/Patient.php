@@ -265,9 +265,9 @@ class Patient extends Record {
         $next = sql_select_row("SELECT a.appDateTime, u.name, u.email FROM admin_appointments a, admin_users u 
                                 WHERE a.doctorId = u.userId AND a.userId = ".$this->id." AND a.appDateTime >= NOW()");
         if($next) {
-            $response['nextWeekday'] = (int)(date("N", strtotime($next['appDateTime']))-1);
+            $response['nextWeekday'] = (int)date("N", strtotime($next['appDateTime']));
             $response['nextDay'] = (int)date("j", strtotime($next['appDateTime']));
-            $response['nextMonth'] = (int)(date("n", strtotime($next['appDateTime']))-1);
+            $response['nextMonth'] = (int)date("n", strtotime($next['appDateTime']));
             $response['nextYear'] = (int)date("Y", strtotime($next['appDateTime']));
             $response['nextTime'] = date("H:i A", strtotime($next['appDateTime']));
             $response['nextDoctor'] = $next['name'];
