@@ -34,9 +34,9 @@ switch($cmd) {
 		$app_data = $record->get_app_data();
 		$app = $record->get_app_graph_points();
 
-		print "<pre>";
-		var_dump($app);
-		print "</pre>";
+		#print "<pre>";
+		#var_dump($app);
+		#print "</pre>";
 
 		# view
 		include(getview("patients.edit"));
