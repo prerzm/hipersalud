@@ -26,6 +26,7 @@ define("LABEL_SEX", "Sexo");
 define("LABEL_MALE", "Masculino");
 define("LABEL_FEMALE", "Femenino");
 define("LABEL_USER_SINCE", "Usuario desde");
+define("LABEL_HEALTH_LAST_RECORD", "Últimos parámetros");
 
 # Login
 define("LABEL_LOGIN", "Iniciar Sesión");
@@ -47,13 +48,14 @@ define("LABEL_CONSULTATIONS_ATTENDED", "Asistió");
 define("LABEL_CONSULTATIONS_MISSED", "No Asistió");
 define("LABEL_CONSULTATIONS_SCHEDULED", "Programadas");
 define("LABEL_CONSULTATIONS_DOCTOR", "Doctor");
-define("LABEL_CONSULTATIONS_NOTES", "Notas");
+define("LABEL_CONSULTATIONS_NOTES", "Comentarios");
 define("LABEL_CONSULTATIONS_NO_PATIENTS", "No se encontraron pacientes");
 define("LABEL_CONSULTATIONS_NO_DOCTORS", "No se encontraron doctores");
 define("LABEL_CONSULTATIONS_HISTORY", "Histórico de Consultas");
 define("LABEL_CONSULTATIONS_DIAGNOSIS", "Diagnóstico");
 define("LABEL_CONSULTATIONS_NO_HISTORY", "No se han dado consultas todavía");
 define("LABEL_CONSULTATIONS_MISSED_CONFIRM", "El paciente no atendió a su cita");
+define("LABEL_CONSULTATIONS_RECORD", "Récord de Consultas");
 
 # Appointments
 define("LABEL_APPOINTMENT", "Cita");
@@ -65,6 +67,7 @@ define("LABEL_APPOINTMENTS_ATTENDED", "Asistió");
 define("LABEL_CALENDAR", "Calendario");
 define("LABEL_APPOINTMENTS_ADD_DAY", "Agregar cita el");
 define("LABEL_APPOINTMENTS_ADD_AT", "a las");
+define("LABEL_APPOINTMENTS_LAST", "Ultima cita");
 
 # Parameters
 define("LABEL_PARAMS", "Parámetros");
@@ -87,3 +90,10 @@ define("LABEL_DOCTORS_SPECIALTY", "Especialidad");
 
 # My Info
 define("LABEL_MY_INFO", "Mi Información");
+
+# Companies
+define("LABEL_COMPANY", "Compañía");
+define("LABEL_COMPANIES", "Compañías");
+define("LABEL_COMPANIES_EMPLOYEES", "Empleados");
+define("LABEL_COMPANIES_CITY", "Ciudad");
+define("LABEL_COMPANIES_NO_EMPLOYEES", "This company has no employees registered");

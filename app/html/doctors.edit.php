@@ -4,6 +4,33 @@
 
     $(document).ready(function(){
 
+		$('#form-add').validate({
+			rules: {
+				name: {
+					required: true
+				},
+				email: {
+					required: true,
+					email: true
+				}
+			},
+			focusCleanup: false,
+			
+			highlight: function(label) {
+				$(label).closest('.control-group').removeClass ('success').addClass('error');
+			},
+			success: function(label) {
+				label
+					.text('OK!').addClass('valid')
+					.closest('.control-group').addClass('success');
+			},
+			errorPlacement: function(error, element) {
+				error.appendTo( element.parents ('.controls') );
+			}
+		});
+
+		$('.form').eq (0).find ('input').eq (0).focus ();
+
 		// date
 		$("#dob").datepicker({ dateFormat: 'yy-mm-dd' });
 
@@ -71,15 +98,16 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="dob"><?=LABEL_DOB;?></label>
-                                    <div class="controls">
-                                        <input type="text" id="dob" name="dob" placeholder="yyyy-mm-dd" class="input input-small" autocomplete="off" value="<?=$record->get("dob");?>" />
-                                    </div>
-                                </div>
-                                <div class="control-group">
                                     <label class="control-label" for="esp"><?=LABEL_DOCTORS_SPECIALTY;?></label>
                                     <div class="controls">
                                         <input type="text" id="esp" name="fields[esp]" class="input input-xlarge" autocomplete="off" value="<?=$record->get("esp");?>" />
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="password"><?=LABEL_PASSWORD;?></label>
+                                    <div class="controls">
+                                        <input type="password" id="password" name="password" class="input input-large" autocomplete="off" value="" />
+                                        <p class="help-block"><?=LABEL_PASSWORD_CHANGE;?></p>
                                     </div>
                                 </div>
                                 <div class="form-actions">
@@ -93,15 +121,14 @@
                                 <div class="control-group">
                                     <p style="font-size:16px;">
                                         <strong><?=LABEL_EMAIL;?>:</strong> <?=$record->get("email");?><br>
-                                        <strong><?=LABEL_AGE;?>:</strong> <?=$record->get("age")." (".$record->get("dob").")";?><br>
-                                        <strong><?=LABEL_HEIGHT;?>:</strong> <?=$record->get("height");?><br>
-                                        <strong><?=LABEL_SEX;?>:</strong> <?=$record->get("sex");?><br>
                                     </p>
                                     <p>*<?=LABEL_USER_SINCE;?>: <?=$record->get("dateCreated");?></p>
                                 </div>
                                 <div class="form-actions">
                                     <button type="button" class="btn btn-large" style="margin-left:0px;" onclick="window.location='./?mod=<?=ps('doc');?>';">&nbsp;<i class="icon-arrow-left"></i> <?=LABEL_FORMS_BACK;?></button>
-                                    <button type="submit" class="btn btn-primary btn-large" style="margin-left:5px;">&nbsp;<i class="icon-hdd"></i> <?=LABEL_FORMS_UPDATE;?></button>
+                                    <?php if($edit) { ?>
+                                        <button type="submit" class="btn btn-primary btn-large" style="margin-left:5px;">&nbsp;<i class="icon-hdd"></i> <?=LABEL_FORMS_UPDATE;?></button>
+                                    <?php } ?>
                                 </div>
                             </fieldset>
                         <?php } ?>
@@ -119,7 +146,7 @@
                     <div class="widget-header">
                         <h3>
                             <i class="icon-list-alt"></i>
-                            <?=LABEL_CONSULTATIONS;?>
+                            <?=LABEL_CONSULTATIONS_RECORD;?>
                         </h3>
 
                     </div> <!-- /.widget-header -->
@@ -132,39 +159,36 @@
                                     <th><?=LABEL_DATE;?></th>
                                     <th><?=LABEL_PATIENT;?></th>
                                     <th><?=LABEL_CONSULTATIONS_NOTES;?></th>
+                                    <th><?=LABEL_APPOINTMENTS_STATUS;?></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="odd gradeX">
-                                    <td>2024-10-01</td>
-                                    <td>Julieta Montes</td>
-                                    <td>El paciente tiene cita el próximo mes</td>
-                                </tr>
-                                <tr class="even gradeC">
-                                    <td>2024-11-01</td>
-                                    <td>Roberto Canales</td>
-                                    <td></td>
-                                </tr>
-                                <tr class="odd gradeA">
-                                    <td>2024-12-01</td>
-                                    <td>Hilda Roberta Barros</td>
-                                    <td></td>
-                                </tr>
-                                <tr class="odd gradeX">
-                                    <td>2025-01-01</td>
-                                    <td>Ernesto Frodel</td>
-                                    <td></td>
-                                </tr>
-                                <tr class="even gradeC">
-                                    <td>2025-02-01</td>
-                                    <td>Anna Estrella</td>
-                                    <td></td>
-                                </tr>
-                                <tr class="odd gradeA">
-                                    <td>2025-03-01</td>
-                                    <td>Eduviges Nieto</td>
-                                    <td></td>
-                                </tr>
+                                <?php if($consultations) { ?>
+                                    <?php foreach($consultations as $c) { ?>
+                                        <tr class="odd gradeX">
+                                            <td>
+                                                <?php if($global_perms->can("csu", "READ")) { ?>
+                                                    <a href="?mod=<?=ps('csu');?>&cmd=<?=ps('edit');?>&id=<?=ps($c['appointmentId']);?>"><?=$c['appDateTime'];?></a>
+                                                <?php } else { ?>
+                                                    <?=$c['appDateTime'];?></td>
+                                                <?php } ?>
+                                            </td>
+                                            <td>
+                                                <?php if($global_perms->can("pat", "READ")) { ?>
+                                                    <a href="?mod=<?=ps("pat");?>&cmd=<?=ps('edit');?>&id=<?=ps($c['userId']);?>"><?=$c['name'];?></a>
+                                                <?php } else { ?>
+                                                    <?=$c['name'];?>
+                                                <?php } ?>
+                                            </td>
+                                            <td><span class="label label-<?=$c['class'];?>"><?=$c['appStatus'];?></span></td>
+                                            <td><?=$c['notes'];?></td>
+                                        </tr>
+                                    <?php } ?>
+                                <?php } else { ?>
+                                    <tr class="odd gradeA">
+                                        <td colspan="3"><?=LABEL_CONSULTATIONS_NO_HISTORY;?></td>
+                                    </tr>
+                                <?php } ?>
                             </tbody>
 						</table>
 

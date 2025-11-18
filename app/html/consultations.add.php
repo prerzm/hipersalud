@@ -147,7 +147,7 @@
 						<h3><?=$record->get("name");?></h3>
 						<strong><?=LABEL_EMAIL;?>:</strong> <?=$record->get("email");?><br>
 						<strong><?=LABEL_AGE;?>:</strong> <?=$record->get("age")." (".$record->get("dob").")";?><input type="hidden" name="dob" value="<?=$record->get("dob");?>"><br>
-						<strong><?=LABEL_HEIGHT;?>:</strong> <?=$record->get("height");?><br>
+						<strong><?=LABEL_HEIGHT;?>:</strong> <?=$record->get("height");?>cm<br>
 						<strong><?=LABEL_SEX;?>:</strong> <?=($record->get("sex")=="M") ? LABEL_MALE : LABEL_FEMALE;?>
 						
 					</div> <!-- /widget-content -->

@@ -14,6 +14,8 @@ switch($cmd) {
 
 		if(Session::get_safe('roleId')==ROLE_DOCTOR) {
 			redirect(array("mod" => "apo"));
+		} elseif(Session::get_safe('roleId')==ROLE_WEBMASTER || Session::get_safe('roleId')==ROLE_ADMIN) {
+			redirect(array("mod" => "pat"));
 		} else {
 			redirect();
 		}
@@ -28,10 +30,6 @@ switch($cmd) {
 
 	default:
 
-		#$val = cookie_get("lang");
-		#var_dump($val);
-		#die();
-		
 		# view
 		include(getview("login.index"));
 

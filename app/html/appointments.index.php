@@ -297,7 +297,9 @@
 				<div id="div_height" class="control-group">
 					<label class="control-label" for="height"><?=LABEL_HEIGHT;?></label>
 					<div class="controls">
-						<input type="text" id="height" name="fields[height]" class="input input-small" autocomplete="off" value="" />
+						<div class="input-append">
+							<input type="text" class="input input-small" id="height" name="fields[height]" autocomplete="off" value=""><span class="add-on">cm</span>
+						</div>
 					</div>
 				</div>
 				<div id="div_sex" class="control-group">

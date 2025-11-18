@@ -171,7 +171,9 @@
                                 <div class="control-group">
                                     <label class="control-label" for="height"><?=LABEL_HEIGHT;?></label>
                                     <div class="controls">
-                                        <input type="text" name="fields[height]" id="height" class="input input-small" autocomplete="off" value="<?=$contact->get("height");?>" />
+                                        <div class="input-append">
+                                            <input type="text" class="input input-mini" id="height" name="fields[height]" autocomplete="off" value="<?=$contact->get("height");?>" onchange="bmi(this.value, <?=$contact->get('height');?>);"><span class="add-on">cm</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="control-group">

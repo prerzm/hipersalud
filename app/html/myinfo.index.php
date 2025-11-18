@@ -65,14 +65,16 @@
                                 <div class="control-group">
                                     <label class="control-label" for="height"><?=LABEL_HEIGHT;?></label>
                                     <div class="controls">
-                                        <input type="text" id="height" name="height" class="input input-small" autocomplete="off" value="<?=$record->get("height");?>" />
+                                        <div class="input-append">
+                                            <input type="text" class="input input-mini" id="height" name="fields[height]" autocomplete="off" value="<?=$record->get("height");?>" ><span class="add-on">cm</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label" for="sex"><?=LABEL_SEX;?></label>
                                     <div class="controls">
-                                        <label class="radio"><input type="radio" name="sex" id="sexm" value="Masculino" <?=($record->get("sex")=="M") ? 'checked="checked"': '';?>> <?=LABEL_MALE;?></label>
-                                        <label class="radio"><input type="radio" name="sex" id="sexf" value="Femenino" <?=($record->get("sex")=="F") ? 'checked="checked"': '';?>> <?=LABEL_FEMALE;?></label>
+                                        <label class="radio"><input type="radio" id="sexm" name="fields[sex]" value="M" <?=($record->get("sex")=="M") ? 'checked="checked"': '';?>> <?=LABEL_MALE;?></label>
+                                        <label class="radio"><input type="radio" id="sexf" name="fields[sex]" value="F" <?=($record->get("sex")=="F") ? 'checked="checked"': '';?>> <?=LABEL_FEMALE;?></label>
                                     </div>
                                 </div>
                                 <div class="form-actions">

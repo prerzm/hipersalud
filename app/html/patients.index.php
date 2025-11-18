@@ -106,6 +106,14 @@
                                             <input type="text" id="email" name="email" value="" class="input-large" autocomplete="off" />
                                         </div>
                                     </div>
+									<div class="control-group">
+										<label class="control-label" for="companyId"><?=LABEL_COMPANY;?></label>
+										<div class="controls">
+											<select name="companyId" class="input-large">
+												<?=Html::select_options($companies, "companyId", "name");?>
+											</select>
+										</div>
+									</div>
                                     <div class="control-group">
                                         <label class="control-label" for="dob"><?=LABEL_DOB;?></label>
                                         <div class="controls">
@@ -158,6 +166,7 @@
 								<tr>
 									<th><?=LABEL_NAME;?></th>
 									<th><?=LABEL_EMAIL;?></th>
+									<th><?=LABEL_COMPANY;?></th>
 									<th><?=LABEL_AGE;?></th>
 								</tr>
 							</thead>
@@ -167,6 +176,7 @@
 										<tr class="<?=($i%2==0) ? 'odd gradeX' : 'even gradeC';?>">
 											<td><a href="?mod=<?=ps($mod);?>&cmd=<?=ps('edit');?>&id=<?=ps($results[$i]['userId']);?>"><?=$results[$i]['name'];?></a></td>
 											<td><?=$results[$i]['email'];?></td>
+											<td><?=$results[$i]['company'];?></td>
 											<td><?=$results[$i]['age'];?></td>
 										</tr>
 									<?php } ?>

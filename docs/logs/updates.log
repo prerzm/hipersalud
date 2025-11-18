@@ -1,0 +1,22 @@
+# 2025-11-13 - Updates call Rafael Galindo / Paty Zendejas
+
+
+
+# 2025-11-13 - Updates call Rafael Galindo / Paty Zendejas
+
+* Agregar campo glucosa
+* Agregar catálogo y módulo de compañías
+ALTER TABLE `admin_users` ADD `companyId` INT NOT NULL DEFAULT '0' AFTER `rolId`;
+ADD TABLE admin_companies
+* Agregar campo de Compañía para el paciente con combo para evitar errores
+* Cambiar nombre de Notas en citas por Comentarios
+* Agregar link de consulta en tabla de consultas en la vista del Doctor
+* Agregar link de paciente en tabla de consultas en la vista del Doctor
+* Cambiar título tabla de consultas en la vista del Doctor por Récord de Consultas
+* Se agregaron las primeras 20 consultas del doctor en la vista del doctor
+* Quitar campo de Fecha de Nacimiento de doctores en sitio web
+* Al agregar doctores a través del módulo de Doctores, se agrega como Patient automáticamente
+* Poder agregar y editar la contraseña de doctores desde el admin
+* Agregar nota cm en estatura
+* Se reenvía al listado de pacientes cuando un admin inicia sesión
+* Agregar logo Hipersalud a sitio web

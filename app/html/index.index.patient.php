@@ -112,3 +112,26 @@
     </div> <!-- /widget -->
 
 </div> <!-- /.span -->
+
+<div class="span4">
+
+    <div class="widget">
+            
+        <div class="widget-header">
+            <h3>
+                <i class="icon-tint"></i>
+                <?=LABEL_PARAMS_GLUCOSE;?>
+            </h3>
+        </div> <!-- /widget-header -->
+        
+        <div class="widget-content">
+
+            <div style="height:200px;">
+                <canvas id="glu-chart" style="margin-left:auto;margin-right:auto;"></canvas>
+            </div>
+
+        </div> <!-- /widget-content -->
+
+    </div> <!-- /widget -->
+
+</div> <!-- /.span -->

@@ -39,4 +39,4 @@ define("APP_MISSED", "3");
 define("APP_BLOCKED", "4");
 
 # params safe
-define("ENCRYPTED_PARAMS", "1");
+define("ENCRYPTED_PARAMS", "0");

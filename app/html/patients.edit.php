@@ -68,6 +68,14 @@
                                             <input type="text" id="email" name="email" class="input input-large" autocomplete="off" value="<?=$record->get("email");?>" />
                                         </div>
                                     </div>
+									<div class="control-group">
+										<label class="control-label" for="companyId"><?=LABEL_COMPANY;?></label>
+										<div class="controls">
+											<select name="companyId" class="input-large">
+												<?=Html::select_options($companies, "companyId", "name", $record->get("companyId"));?>
+											</select>
+										</div>
+									</div>
                                     <div class="control-group">
                                         <label class="control-label" for="password"><?=LABEL_PASSWORD;?></label>
                                         <div class="controls">
@@ -84,14 +92,16 @@
                                     <div class="control-group">
                                         <label class="control-label" for="height"><?=LABEL_HEIGHT;?></label>
                                         <div class="controls">
-                                            <input type="text" id="height" name="fields[height]" class="input input-small" autocomplete="off" value="<?=$record->get("height");?>" />
+                                            <div class="input-append">
+                                                <input type="text" class="input input-mini" id="height" name="fields[height]" autocomplete="off" value="<?=$record->get("height");?>"><span class="add-on">cm</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="control-group">
                                         <label class="control-label" for="sex"><?=LABEL_SEX;?></label>
                                         <div class="controls">
-                                            <label class="radio"><input type="radio" name="fields[sex]" id="sexm" value="M" <?=($record->get("sex")=="M") ? 'checked="checked"': '';?>> <?=LABEL_MALE;?></label>
-                                            <label class="radio"><input type="radio" name="fields[sex]" id="sexf" value="F" <?=($record->get("sex")=="F") ? 'checked="checked"': '';?>> <?=LABEL_FEMALE;?></label>
+                                            <label class="radio"><input type="radio" id="sexm" value="M" name="fields[sex]" <?=($record->get("sex")=="M") ? 'checked="checked"': '';?>> <?=LABEL_MALE;?></label>
+                                            <label class="radio"><input type="radio" id="sexf" value="F" name="fields[sex]" <?=($record->get("sex")=="F") ? 'checked="checked"': '';?>> <?=LABEL_FEMALE;?></label>
                                         </div>
                                     </div>
                                     <div class="form-actions">
@@ -107,7 +117,7 @@
                                     <p style="font-size:16px;">
                                         <strong><?=LABEL_EMAIL;?>:</strong> <?=$record->get("email");?><br>
                                         <strong><?=LABEL_AGE;?>:</strong> <?=$record->get("age")." (".$record->get("dob").")";?><br>
-                                        <strong><?=LABEL_HEIGHT;?>:</strong> <?=$record->get("height");?><br>
+                                        <strong><?=LABEL_HEIGHT;?>:</strong> <?=$record->get("height");?>cm<br>
                                         <strong><?=LABEL_SEX;?>:</strong> <?=($record->get("sex")=="M") ? LABEL_MALE : LABEL_FEMALE;?><br>
                                     </p>
                                     <p>*<?=LABEL_USER_SINCE;?>: <?=DateLang::short($record->get("dateCreated"));?></p>

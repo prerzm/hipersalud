@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Proyecto DM</title>
+		<title>Hipersalud</title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">   
@@ -34,6 +34,8 @@
 				
 				<form action="?mod=<?=ps('log');?>" method="post" id="form-login" class="form-horizontal" novalidate="novalidate">
 					<input type="hidden" name="cmd" value="<?=ps('login');?>">
+
+					<p><img src="img/logo_hipersalud_full.png" alt="Hipersalud" /></p>
 				
 					<h1><?=LABEL_LOGIN;?></h1>
 
@@ -84,6 +86,8 @@
                     */ ?>
 					
 				</form>
+				
+				<div style="text-align:right;"><img src="img/logo_hipermedica_by.png" alt="Grupo Hipermédica" /></div>
 				
 			</div> <!-- /content -->
 			

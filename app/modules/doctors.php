@@ -5,15 +5,7 @@ switch($cmd) {
 	case 'add':
 
 		# vars
-		$values['rolId'] = ROLE_DOCTOR;
-		$values['name'] = pf('name');
-		$values['email'] = pf('email');
-        $values['dob'] = pf('dob');
-		$values['fields'] = "";
-
-		$record = new Patient();
-		$record->set($values);
-
+		$record = new Doctor();
 		$id = $record->add();
 
 		if($id>0) {
@@ -32,8 +24,21 @@ switch($cmd) {
 
 		# vars
 		$id = (int)pg('id');
-		$record = new Patient($id);
+		$record = new Doctor($id);
 		$edit = $global_perms->can($mod, "EDIT");
+
+		if($record->id()==0)  {
+			$global_alerts->error("Hubo un problema al obtener la información, intentar nuevamente");
+			redirect( array("mod" => "doc") );
+		}
+
+		$consultations = $record->get_consultations();
+		if($consultations) {
+			for($i=0; $i<count($consultations); $i++) {
+				$fields = fromdb($consultations[$i]['fields'], true);
+				$consultations[$i]['notes'] = ($fields['notes']) ?? "-";
+			}
+		}
 
 		# view
 		include(getview("doctors.edit"));
@@ -44,13 +49,12 @@ switch($cmd) {
 
 		# vars
 		$id = (int)pg('id');
-		$record = new Patient($id);
+		$record = new Doctor($id);
 
 		if($record->id()>0) {
 
 			$values['name'] = pf('name');
 			$values['email'] = pf('name');
-			$values['dob'] = pf('name');
 			$values['fields'] = todb($_POST['fields']);
 
 			$record->clear();
@@ -77,7 +81,7 @@ switch($cmd) {
 
 			# vars
 			$id = (int)pg('id');
-			$record = new Patient($id);
+			$record = new Doctor($id);
 
 			if($record->delete()) {
 				$global_alerts->success("La información se actualizó correctamente");

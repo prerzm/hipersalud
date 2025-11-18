@@ -8,6 +8,7 @@ class Patient extends Record {
 
     public function add() {
         $values['rolId'] = ROLE_PATIENT;
+        $values['companyId'] = (int)pf('companyId');
         $values['name'] = pf('name', 200);
         $values['email'] = pf('email', 200);
         $values['dob'] = pf('dob', 10);
@@ -18,6 +19,7 @@ class Patient extends Record {
 
     public function update() {
 
+        $values['companyId'] = (int)pf('companyId');
         $values['name'] = pf('name');
         $values['email'] = pf('email');
         $values['dob'] = pf('dob', 10);
@@ -112,21 +114,20 @@ class Patient extends Record {
 
     public function get_data_params() {
         $data = array();
-        $params = sql_select("SELECT paramDateTime, fields FROM admin_users_params WHERE userId = ".$this->id." ORDER BY paramDateTime DESC LIMIT 0, 20");
+        $params = sql_select("SELECT paramDateTime, fields FROM admin_users_params WHERE userId = ".$this->id." ORDER BY paramDateTime DESC LIMIT 0, 12");
         if($params) {
             foreach($params as $p) {
                 $dec = fromdb($p['fields'], true);
-                if(isset($dec['weight']) && isset($dec['fc']) && isset($dec['presis']) && isset($dec['predia'])) {
-                    $data[strtotime($p['paramDateTime'])] = [
-                        "date" => DateLang::date($p['paramDateTime'], "d/m"), 
-                        "dateshort" => DateLang::short($p['paramDateTime'], "d/m"), 
-                        "weight" => $dec['weight'], 
-                        "bmi" => NumberFormat::float(Health::bmi($dec['weight'], $this->get("height"))), 
-                        "fc" => $dec['fc'], 
-                        "presis" => $dec['presis'], 
-                        "predia" => $dec['predia']
-                    ];
-                }
+                $data[strtotime($p['paramDateTime'])] = [
+                    "date" => DateLang::date($p['paramDateTime'], "d/m"), 
+                    "dateshort" => DateLang::short($p['paramDateTime'], "d/m"), 
+                    "weight" => (isset($dec['weight']) && $dec['weight']>0) ? $dec['weight'] : 0, 
+                    "bmi" => (isset($dec['weight']) && $dec['weight']>0) ? NumberFormat::float(Health::bmi($dec['weight'], $this->get("height"))) : 0, 
+                    "fc" => (isset($dec['fc']) && $dec['fc']>0) ? $dec['fc'] : 0, 
+                    "presis" => (isset($dec['presis']) && $dec['presis']>0) ? $dec['presis'] : 0, 
+                    "predia" => (isset($dec['predia']) && $dec['predia']>0) ? $dec['predia'] : 0,
+                    "glu" => (isset($dec['glu']) && $dec['glu']>0) ? $dec['glu'] : 0
+                ];
             }
         }
         return $data;
@@ -150,6 +151,7 @@ class Patient extends Record {
         $fc = "";
         $presis = "";
         $predia = "";
+        $glucose = "";
         $data = $this->get_data();
         if(count($data)>0) {
             foreach($data as $d) {
@@ -159,6 +161,7 @@ class Patient extends Record {
                 $fc .= $d['fc'].", ";
                 $presis .= $d['presis'].", ";
                 $predia .= $d['predia'].", ";
+                $glucose .= $d['glu'].", ";
             }
             $graph_data['labels'] = substr($labels, 0, strlen($labels)-2);
             $graph_data['weight'] = substr($weight, 0, strlen($weight)-2);
@@ -166,6 +169,7 @@ class Patient extends Record {
             $graph_data['fc'] = substr($fc, 0, strlen($fc)-2);
             $graph_data['presis'] = substr($presis, 0, strlen($presis)-2);
             $graph_data['predia'] = substr($predia, 0, strlen($predia)-2);
+            $graph_data['glu'] = substr($glucose, 0, strlen($glucose)-2);
         }
         return $graph_data;
     }

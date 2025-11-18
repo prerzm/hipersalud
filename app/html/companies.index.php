@@ -19,11 +19,7 @@
 				name: {
 					required: true
 				},
-				email: {
-					required: true,
-					email: true
-				},
-				password: {
+				city: {
 					required: true
 				}
 			},
@@ -44,9 +40,6 @@
 
 		$('.form').eq (0).find ('input').eq (0).focus ();
 
-		// date
-		$("#dob").datepicker({ dateFormat: 'yy-mm-dd' });
-
 	}); // end document.ready
 
 </script>
@@ -55,11 +48,11 @@
 		
 		<div id="page-title" class="clearfix">
 
-			<h1><?=LABEL_DOCTORS;?></h1>
+			<h1><?=LABEL_COMPANIES;?></h1>
 
 			<ul class="breadcrumb">
 				<li><a href="./"><?=LABEL_MENU_HOME;?></a> <span class="divider">/</span></li>
-				<li class="active"><?=LABEL_DOCTORS;?></li>
+				<li class="active"><?=LABEL_COMPANIES;?></li>
 			</ul>
 			
 		</div> <!-- /.page-title -->
@@ -88,7 +81,7 @@
                         
                         <div class="widget-content">
                         
-                            <form action="./?mod=<?=ps('doc');?>" method="post" id="form-add" class="form" novalidate="novalidate">
+                            <form action="./?mod=<?=ps('com');?>" method="post" id="form-add" class="form" novalidate="novalidate">
                                 <input type="hidden" name="cmd" value="<?=ps('add');?>">
                                 <fieldset>
                                     <div class="control-group">
@@ -98,17 +91,11 @@
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label" for="email"><?=LABEL_EMAIL;?></label>
+                                        <label class="control-label" for="city"><?=LABEL_COMPANIES_CITY;?></label>
                                         <div class="controls">
-                                            <input type="text" id="email" name="email" value="" class="input-large" autocomplete="off" />
+                                            <input type="text" id="city" name="city" value="" class="input-large" autocomplete="off" />
                                         </div>
                                     </div>
-									<div class="control-group">
-										<label class="control-label" for="password"><?=LABEL_PASSWORD;?></label>
-										<div class="controls">
-											<input type="password" id="password" name="password" class="input input-large" autocomplete="off" value="" />
-										</div>
-									</div>
                                     <div class="form-actions">
                                         <button type="submit" class="btn btn-primary" style="margin-left:0px;"><?=LABEL_FORMS_SAVE;?></button>
                                     </div>
@@ -129,7 +116,7 @@
 					<div class="widget-header">
 						<h3>
 							<i class="icon-th-list"></i>
-							<?=LABEL_DOCTORS;?>
+							<?=LABEL_COMPANIES;?>
 						</h3>
 					</div> <!-- /.widget-header -->
 					
@@ -139,17 +126,23 @@
 							<thead>
 								<tr>
 									<th><?=LABEL_NAME;?></th>
-									<th><?=LABEL_EMAIL;?></th>
-									<th><?=LABEL_AGE;?></th>
+									<th><?=LABEL_COMPANIES_CITY;?></th>
+									<th><?=LABEL_COMPANIES_EMPLOYEES;?></th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php if($results) { ?>
 									<?php for($i=0; $i<count($results); $i++) { ?>
 										<tr class="<?=($i%2==0) ? 'odd gradeX' : 'even gradeC';?>">
-											<td><a href="?mod=<?=ps('doc');?>&cmd=<?=ps('edit');?>&id=<?=ps($results[$i]['userId']);?>"><?=$results[$i]['name'];?></a></td>
-											<td><?=$results[$i]['email'];?></td>
-											<td><?=$results[$i]['age'];?></td>
+											<td>
+                                                <?php if($global_perms->can("com", "EDIT")) { ?>
+                                                    <a href="?mod=<?=ps('com');?>&cmd=<?=ps('edit');?>&id=<?=ps($results[$i]['companyId']);?>"><?=$results[$i]['name'];?></a>
+                                                <?php } else { ?>
+                                                    <?=$results[$i]['name'];?>
+                                                <?php } ?>
+                                            </td>
+											<td><?=$results[$i]['city'];?></td>
+                                            <td><?=$results[$i]['employees'];?></td>
 										</tr>
 									<?php } ?>
 								<?php } ?>

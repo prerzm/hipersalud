@@ -12,6 +12,7 @@ function getmodule($mod) {
         case 'apo': $module = PATH_MODULES."appointments.php"; break;
         case 'csu': $module = PATH_MODULES."consultations.php"; break;
 
+        case 'com': $module = PATH_MODULES."companies.php"; break;
         case 'mod': $module = PATH_MODULES."modules.php"; break;
         case 'rol': $module = PATH_MODULES."roles.php"; break;
         case 'die': $module = PATH_MODULES."diets.php"; break;

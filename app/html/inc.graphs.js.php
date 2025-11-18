@@ -151,4 +151,33 @@
 		},
 	});
 
+	// glucose chart
+	const chGlu = document.getElementById('glu-chart');
+	new Chart(chGlu, {
+		type: 'line',
+		data: {
+			labels: [<?=$data['labels'];?>],
+			datasets: [
+				{
+					label: '<?=LABEL_PARAMS_GLUCOSE;?>',
+					data: [<?=$data['glu'];?>],
+					borderColor: '#b94a48',
+					backgroundColor: '#f2dede'
+				}
+			]
+		},
+		options: {
+			responsive: true,
+			plugins: {
+				legend: {
+					position: 'top',
+				},
+				title: {
+					display: true,
+					text: '<?=LABEL_PARAMS_GLUCOSE;?>'
+				}
+			}
+		},
+	});
+
 <?php } ?>

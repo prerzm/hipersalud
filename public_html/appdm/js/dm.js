@@ -8,7 +8,7 @@ function bmi(weight, height) {
     if(bmi<18.5) {
         $("#div_imc").css('color', '#c09853');
         $("#icon_imc_under").show();
-    } else if(bmi>25) {
+    } else if(bmi>30) {
         $("#div_imc").css('color', '#b94a48');
         $("#icon_imc_over").show();
     } else {

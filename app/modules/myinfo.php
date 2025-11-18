@@ -21,7 +21,7 @@ switch($cmd) {
 		}
 
 		# redirect
-		redirect( array("mod" => "pat", "cmd" => "edit", "id" => $id) );
+		redirect( array("mod" => "inf") );
 
 	break;
 
