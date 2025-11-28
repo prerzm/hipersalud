@@ -6,10 +6,22 @@ switch($cmd) {
 
 		# vars
 		$record = new Patient();
+        $values['rolId'] = ROLE_PATIENT;
+        $values['companyId'] = (int)pf('companyId');
+        $values['name'] = pf('name', 200);
+        $values['email'] = pf('email', 200);
+        $values['dob'] = pf('dob', 10);
+		$token = new Token("");
+		$token->generate(array("email" => $values['email']), (int)TOKEN_SETPSWD_LIFE);
+		$values['code'] = base64_encode($token->get_token());
+        $values['fields'] = todb(pf('fields'), true);
+		$values['notes'] = "";
 		
+		$record->set($values);
 		$id = $record->add();
 
 		if($id>0) {
+			$record->send_welcome();
 			$global_alerts->success("La información se actualizó correctamente");
 			redirect( array("mod" => "pat", "cmd" => "edit", "id" => $id) );
 		} else {

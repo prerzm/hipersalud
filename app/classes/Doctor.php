@@ -10,7 +10,7 @@ class Doctor extends Record {
         $values['rolId'] = ROLE_DOCTOR;
         $values['name'] = pf('name', 200);
         $values['email'] = pf('email', 200);
-        $values['fields'] = "";
+        $values['fields'] = todb($_POST['fields'], true);
         $values['notes'] = "";
 
         # password

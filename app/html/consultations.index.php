@@ -82,15 +82,9 @@
 		var contact_id = parseInt(id);
 		if(contact_id>0) {
 			$("#div_email").hide();
-			$("#div_dob").hide();
-			$("#div_height").hide();
-			$("#div_sex").hide();
 			$("#id").val(contact_id);
 		} else {
 			$("#div_email").show();
-			$("#div_dob").show();
-			$("#div_height").show();
-			$("#div_sex").show();
 			$("#id").val(0);
 		}
 	}
@@ -159,27 +153,6 @@
                                     <label class="control-label" for="email"><?=LABEL_EMAIL;?></label>
                                     <div class="controls">
                                         <input type="text" id="email" name="email" value="" class="input-large" autocomplete="off" />
-                                    </div>
-                                </div>
-                                <div id="div_dob" class="control-group">
-                                    <label class="control-label" for="dob"><?=LABEL_DOB;?></label>
-                                    <div class="controls">
-                                        <input type="text" id="dob" name="dob" placeholder="yyyy-mm-dd" value="" class="input-large" autocomplete="off" />
-                                    </div>
-                                </div>
-                                <div id="div_height" class="control-group">
-                                    <label class="control-label" for="height"><?=LABEL_HEIGHT;?></label>
-                                    <div class="controls">
-                                        <div class="input-append">
-                                            <input type="text" class="input input-mini" id="height" name="fields[height]" autocomplete="off" value="" ><span class="add-on">cm</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="div_sex" class="control-group">
-                                    <label class="control-label" for="sex"><?=LABEL_SEX;?></label>
-                                    <div class="controls">
-                                        <label class="radio"><input type="radio" name="fields[sex]" id="sexm" value="M" checked="checked"> <?=LABEL_MALE;?></label>
-                                        <label class="radio"><input type="radio" name="fields[sex]" id="sexf" value="F"> <?=LABEL_FEMALE;?></label>
                                     </div>
                                 </div>
                                 <div class="form-actions">

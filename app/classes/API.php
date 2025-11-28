@@ -29,47 +29,42 @@ class API {
     // Handle GET requests
     private function handleGet() {
         $token = $this->getToken();
-        if($token) {
-            $token = new Token($token);
-            if($token->valid()) {
-                $type = pf('type');
-                $cmd = pf('cmd');
-                if($type=="user") {
-                    $user = new Patient((int)$token->get_data()['userId']);
-                    if($user->id()>0) {
-                        $token->refresh();
-                        $response['Token'] = $token->get_token();
-                        switch($cmd) {
-                            case 'dash':
-                                $response['info'] = $user->get_app_graph_points();
-                                $this->sendResponse(200, $response);
-                            break;
-                            case 'apps':
-                                $response['info'] = $user->get_app_appointments();
-                                $this->sendResponse(200, $response);
-                            break;
-                            case 'notes':
-                                $response['info'] = $user->get_app_notes();
-                                $this->sendResponse(200, $response);
-                            break;
-                            default:
-                                $response['error'] = "Invalid command";
-                                $this->sendResponse(404, $response);
-                            break;
-                        }
-                    } else {
-                        $this->sendResponse(404, ['error' => 'Invalid user ID']);
+        if($token->valid()) {
+            $type = pf('type');
+            $cmd = pf('cmd');
+            if($type=="user") {
+                $user = new Patient((int)$token->get("userId"));
+                if($user->id()>0) {
+                    $token->refresh();
+                    $response['Token'] = $token->get_token();
+                    switch($cmd) {
+                        case 'dash':
+                            $response['info'] = $user->get_app_graph_points();
+                            $this->sendResponse(200, $response);
+                        break;
+                        case 'apps':
+                            $response['info'] = $user->get_app_appointments();
+                            $this->sendResponse(200, $response);
+                        break;
+                        case 'notes':
+                            $response['info'] = $user->get_app_notes();
+                            $this->sendResponse(200, $response);
+                        break;
+                        default:
+                            $response['error'] = "Invalid command";
+                            $this->sendResponse(404, $response);
+                        break;
                     }
-                } elseif($type=="doctor") {
-
                 } else {
-                    $this->sendResponse(404, ['error' => 'Invalid user']);
+                    $this->sendResponse(404, ['error' => 'Invalid user ID']);
                 }
+            } elseif($type=="doctor") {
+
             } else {
-                $this->sendResponse(401, ['error' => 'Token expired']);
+                $this->sendResponse(404, ['error' => 'Invalid user']);
             }
         } else {
-            $this->sendResponse(401, ['error' => 'Invalid token']);
+            $this->sendResponse(401, ['error' => 'Invalid token or token expired']);
         }
     }
 
@@ -82,30 +77,28 @@ class API {
                 if($user===false) {
                     $this->sendResponse(401, ['error' => 'Invalid credentials']);
                 } else {
-                    $token = Token::generate($user);
-                    $this->sendResponse(200, ['token' => $token, 'message' => 'OK']);
+                    $token = new Token("");
+                    $token->generate($user);
+                    $this->sendResponse(200, ['token' => $token->get_token(), 'message' => 'OK']);
                 }
             break;
             case 'add':
                 $token = $this->getToken();
-                if($token) {
-                    $token = new Token($token);
-                    if($token->valid()) {
-                        $type = pf('type');
-                        if($type=="user") {
-                            $user = new Patient((int)$token->get_data()['userId']);
-                            if($user->id()>0) {
-                                file_put_contents("0-add.txt", json_encode(array( 'weight' => pf('weight'), 'fc' => pf('fc'), 'presis' => pf('presis'), 'predia' => pf('predia'), 'glu' => pf('glu') )), FILE_APPEND | LOCK_EX);
-                                $token->refresh();
-                                $params = new PatientParams();
-                                $values['userId'] = $user->id();
-                                $fields = array( 'weight' => pf('weight'), 'fc' => pf('fc'), 'presis' => pf('presis'), 'predia' => pf('predia'), 'glu' => pf('glu') );
-                                $values['fields'] = todb($fields, true);
-                                $params->set($values);
-                                $updated = $params->add();
-                                if($updated>0) {
-                                    $this->sendResponse(200, ['token' => $token->get_token(), 'message' => 'OK']);
-                                }
+                if($token->valid()) {
+                    $type = pf('type');
+                    if($type=="user") {
+                        $user = new Patient((int)$token->get("userId"));
+                        if($user->id()>0) {
+                            file_put_contents("0-add.txt", json_encode(array( 'weight' => pf('weight'), 'fc' => pf('fc'), 'presis' => pf('presis'), 'predia' => pf('predia'), 'glu' => pf('glu') )), FILE_APPEND | LOCK_EX);
+                            $token->refresh();
+                            $params = new PatientParams();
+                            $values['userId'] = $user->id();
+                            $fields = array( 'weight' => pf('weight'), 'fc' => pf('fc'), 'presis' => pf('presis'), 'predia' => pf('predia'), 'glu' => pf('glu') );
+                            $values['fields'] = todb($fields, true);
+                            $params->set($values);
+                            $updated = $params->add();
+                            if($updated>0) {
+                                $this->sendResponse(200, ['token' => $token->get_token(), 'message' => 'OK']);
                             }
                         }
                     }
@@ -114,18 +107,15 @@ class API {
             break;
             case 'save':
                 $token = $this->getToken();
-                if($token) {
-                    $token = new Token($token);
-                    if($token->valid()) {
-                        $type = pf('type');
-                        if($type=="user") {
-                            $user = new Patient((int)$token->get_data()['userId']);
-                            if($user->id()>0) {
-                                $token->refresh();
-                                $values['notes'] = todb( array( 'meds' => pf('meds'), 'ques' => pf('ques') ), true);
-                                query_update("admin_users", $values, "userId = ".$user->id());
-                                $this->sendResponse(200, ['token' => $token->get_token(), 'message' => "OK"]);
-                            }
+                if($token->valid()) {
+                    $type = pf('type');
+                    if($type=="user") {
+                        $user = new Patient((int)$token->get("userId"));
+                        if($user->id()>0) {
+                            $token->refresh();
+                            $values['notes'] = todb( array( 'meds' => pf('meds'), 'ques' => pf('ques') ), true);
+                            query_update("admin_users", $values, "userId = ".$user->id());
+                            $this->sendResponse(200, ['token' => $token->get_token(), 'message' => "OK"]);
                         }
                     }
                 }
@@ -167,7 +157,9 @@ class API {
         if(isset($headers['Authorization'])) {
             $matches = [];
             if(preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
-                return $matches[1];
+                if(isset($matches[1])) {
+                    return new Token($matches[1]);
+                }
             }
         }
     }

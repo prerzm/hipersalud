@@ -1,6 +1,10 @@
 # 2025-11-13 - Updates call Rafael Galindo / Paty Zendejas
 
+* Modificar búsqueda/agregar paciente al agregar una consulta
+* Agregar envío de mail al dar de alta
+* Funcionalidad para establecer contraseña con correo de bienvenida
 
+ALTER TABLE `admin_users` ADD `code` VARCHAR(500) NOT NULL DEFAULT '' AFTER `dateCreated`;
 
 # 2025-11-13 - Updates call Rafael Galindo / Paty Zendejas
 

@@ -55,7 +55,7 @@ switch($cmd) {
 
 			$values['name'] = pf('name');
 			$values['email'] = pf('name');
-			$values['fields'] = todb($_POST['fields']);
+			$values['fields'] = todb($_POST['fields'], true);
 
 			$record->clear();
 			$record->set($values);
@@ -101,7 +101,14 @@ switch($cmd) {
 	default:
 
 		# queries
-		$results = sql_select("SELECT *, TIMESTAMPDIFF(YEAR, dob, CURDATE()) AS age FROM admin_users WHERE rolId = ".ROLE_DOCTOR." AND deleted = 0");
+		$results = sql_select("SELECT * FROM admin_users WHERE rolId = ".ROLE_DOCTOR." AND deleted = 0");
+
+		if($results) {
+			for($i=0; $i<count($results); $i++) {
+				$fields = fromdb($results[$i]['fields'], true);
+				$results[$i]['esp'] = ($fields['esp']) ?? "-";
+			}
+		}
 
 		# view
 		include(getview("doctors.index"));

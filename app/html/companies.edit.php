@@ -89,7 +89,7 @@
                                     </div>
                                 </div>
                                 <div class="form-actions">
-                                    <button type="button" class="btn" style="margin-left:0px;" onclick="window.location='./?mod=<?=ps('doc');?>';">&nbsp;<i class="icon-arrow-left"></i> <?=LABEL_FORMS_BACK;?></button>
+                                    <button type="button" class="btn" style="margin-left:0px;" onclick="window.location='./?mod=<?=ps('com');?>';">&nbsp;<i class="icon-arrow-left"></i> <?=LABEL_FORMS_BACK;?></button>
                                     <button type="submit" class="btn btn-primary" style="margin-left:5px;">&nbsp;<i class="icon-hdd"></i> <?=LABEL_FORMS_UPDATE;?></button>
                                 </div>
                             </fieldset>

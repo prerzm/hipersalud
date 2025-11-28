@@ -94,15 +94,21 @@
                                     <div class="control-group">
                                         <label class="control-label" for="name"><?=LABEL_NAME;?></label>
                                         <div class="controls">
-                                            <input type="text" id="name" name="name" value="" class="input-large" autocomplete="off" />
+                                            <input type="text" id="name" name="name" value="" class="input input-large" autocomplete="off" />
                                         </div>
                                     </div>
                                     <div class="control-group">
                                         <label class="control-label" for="email"><?=LABEL_EMAIL;?></label>
                                         <div class="controls">
-                                            <input type="text" id="email" name="email" value="" class="input-large" autocomplete="off" />
+                                            <input type="text" id="email" name="email" value="" class="input input-large" autocomplete="off" />
                                         </div>
                                     </div>
+									<div class="control-group">
+										<label class="control-label" for="esp"><?=LABEL_DOCTORS_SPECIALTY;?></label>
+										<div class="controls">
+											<input type="text" id="esp" name="fields[esp]" class="input input-large" autocomplete="off" value="" />
+										</div>
+									</div>
 									<div class="control-group">
 										<label class="control-label" for="password"><?=LABEL_PASSWORD;?></label>
 										<div class="controls">
@@ -140,7 +146,7 @@
 								<tr>
 									<th><?=LABEL_NAME;?></th>
 									<th><?=LABEL_EMAIL;?></th>
-									<th><?=LABEL_AGE;?></th>
+									<th><?=LABEL_DOCTORS_SPECIALTY;?></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -149,7 +155,7 @@
 										<tr class="<?=($i%2==0) ? 'odd gradeX' : 'even gradeC';?>">
 											<td><a href="?mod=<?=ps('doc');?>&cmd=<?=ps('edit');?>&id=<?=ps($results[$i]['userId']);?>"><?=$results[$i]['name'];?></a></td>
 											<td><?=$results[$i]['email'];?></td>
-											<td><?=$results[$i]['age'];?></td>
+											<td><?=$results[$i]['esp'];?></td>
 										</tr>
 									<?php } ?>
 								<?php } ?>

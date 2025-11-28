@@ -10,6 +10,7 @@ include_once(PATH_INCLUDES.'autoload.php');
 include_once(PATH_INCLUDES.'connect.php');
 include_once(PATH_INCLUDES.'lib.database.php');
 include_once(PATH_INCLUDES.'lib.vars.php');
+include_once(PATH_APP.'vendor/autoload.php');
 
 # get params
 $mod = (Login::logged()) ? pg('mod') : "log";

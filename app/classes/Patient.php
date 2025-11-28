@@ -6,17 +6,6 @@ class Patient extends Record {
     protected $table = "admin_users";
     protected $query = "SELECT *, TIMESTAMPDIFF(YEAR, dob, CURDATE()) AS age FROM TABLE WHERE rolId = ".ROLE_PATIENT." AND KEY = ID";
 
-    public function add() {
-        $values['rolId'] = ROLE_PATIENT;
-        $values['companyId'] = (int)pf('companyId');
-        $values['name'] = pf('name', 200);
-        $values['email'] = pf('email', 200);
-        $values['dob'] = pf('dob', 10);
-        $values['fields'] = todb(pf('fields'), true);
-        $this->set($values);
-        return parent::add();
-    }
-
     public function update() {
 
         $values['companyId'] = (int)pf('companyId');
@@ -35,6 +24,19 @@ class Patient extends Record {
 
         return query_update($this->table, $this->info, $this->key." = ".$this->id);
 
+    }
+
+    public function send_welcome() {
+        $mail = new MailWelcome();
+        $mail->info($this->get("email"), $this->get("name"), $this->get("code"));
+        return $mail->process();
+    }
+
+    public function set_password($pswd) {
+        if(trim($pswd!="")) {
+            return query_update($this->table, array("password" => Crypt::hash($pswd)), $this->key." = ".$this->id);
+        }
+        return -1;
     }
 
     public function get_history() {

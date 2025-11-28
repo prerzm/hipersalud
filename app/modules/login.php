@@ -28,6 +28,8 @@ switch($cmd) {
 
 		redirect();
 
+	break;
+
 	default:
 
 		# view

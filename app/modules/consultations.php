@@ -11,15 +11,35 @@ switch($cmd) {
 		if($id>0) {
         	$record = new Patient($id);
 		} else {
+
 			$record = new Patient();
-			$id = $record->add();
+            $values['rolId'] = ROLE_PATIENT;
+            $values['name'] = pf('name', 200);
+            $values['email'] = pf('email', 200);
+            $token = new Token("");
+            $token->generate(array("email" => $values['email']), (int)TOKEN_SETPSWD_LIFE);
+            $values['code'] = base64_encode($token->get_token());
+            $values['fields'] = "";
+            $values['notes'] = "";
+            
+            $record->set($values);
+            $id = $record->add();
+
+            if($id>0) {
+                $record->send_welcome();
+            }
+
 		}
 
-		if($id>0) {
-			# redirect
-			redirect( array("mod" => "csu", "cmd" => "add", "id" => $id, "did" => $did) );
+		if($did>0) {
+			if($id>0) {
+				redirect( array("mod" => "csu", "cmd" => "add", "id" => $id, "did" => $did) );
+			} else {
+				$global_alerts->error("Hubo un problema en la información, intentar nuevamente");
+				redirect( array("mod" => "csu") );
+			}
 		} else {
-			$global_alerts->error("Hubo un problema en la información, intentar nuevamente");
+			$global_alerts->error("Es necesario que seleccione al doctor de la consulta");
 			redirect( array("mod" => "csu") );
 		}
 

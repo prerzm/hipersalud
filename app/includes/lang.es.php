@@ -97,3 +97,16 @@ define("LABEL_COMPANIES", "Compañías");
 define("LABEL_COMPANIES_EMPLOYEES", "Empleados");
 define("LABEL_COMPANIES_CITY", "Ciudad");
 define("LABEL_COMPANIES_NO_EMPLOYEES", "This company has no employees registered");
+
+# Welcome email
+define("LABEL_EMAIL_WELCOME_WELCOME", "Bienvenido a Hipersalud!");
+define("LABEL_EMAIL_WELCOME_HELLO", "Hola");
+define("LABEL_EMAIL_WELCOME_MESSAGE", "Te damos al bienvenida a Hipersalud");
+define("LABEL_EMAIL_WELCOME_LINK", "Accede a la siguiente liga para establecer tu contraseña:");
+define("LABEL_EMAIL_WELCOME_ACCESS_1", "Una vez que tengas tu contraseña, puedes acceder via web");
+define("LABEL_EMAIL_WELCOME_ACCESS_2", "o descargar la aplicación para tu teléfono desde los íconos de la App Store y Google Play.");
+define("LABEL_EMAIL_WELCOME_THANKS", "Atentamente");
+define("LABEL_EMAIL_WELCOME_TERMS", "Aviso de Privacidad");
+
+# Set password
+define("LABEL_PWSD_SET", "Establece la contraseña con la cual podrás iniciar sesión");

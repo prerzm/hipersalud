@@ -2,10 +2,8 @@
 
 class Token {
 
-    /********* changed to 480 minutes (8 hours) to test flutter app api calls ********/
-    private static $life = 480 * 60; // 15 minutes
-    /*********  ********/
     private $token;
+    private $life = 15; // 15 minutes
     private $expires_at;
     private $data;
 
@@ -21,22 +19,24 @@ class Token {
         }
     }
 
-    public static function generate($data) {
+    public function generate($data, $total=15) {
         $token['data'] = base64_encode(json_encode($data));
         $token['random']= base64_encode(random_bytes(16));
-        $token['expires'] = time() + self::$life;
-        return Crypt::encrypt(json_encode($token));
+        $token['expires'] = strtotime("+$total minutes");
+        $this->life = $total;
+        $this->expires_at = $token['expires'];
+        $this->data = $data;
+        $this->token = Crypt::encrypt(json_encode($token));
     }
 
     public function refresh() {
         if($this->valid()) {
-            $this->token = $this->generate($this->data);
-            $this->expires_at = time() + self::$life;
+            $this->generate($this->data, $this->life);
         }
     }
 
     public function valid() {
-        if( time()>$this->expires_at || !isset($this->data['userId']) || (int)$this->data['userId']==0) {
+        if( time()>$this->expires_at || empty($this->data)) {
             return false;
         }
         return true;
@@ -46,8 +46,11 @@ class Token {
         return $this->token;
     }
 
-    public function get_data() {
-        return $this->data;
+    public function get($field) {
+        if(isset($this->data[$field])) {
+            return $this->data[$field];
+        }
+        return "";
     }
 
     public function check_times() {
